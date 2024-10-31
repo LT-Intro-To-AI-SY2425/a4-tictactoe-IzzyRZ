@@ -1,6 +1,6 @@
 # NOTE: Until you fill in the TTTBoard class mypy is going to give you multiple errors
 # talking about unimplemented class attributes, don't worry about this as you're working
-
+winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
 class TTTBoard:
     """A tic tac toe board
@@ -11,10 +11,28 @@ class TTTBoard:
     """
     def __init__(self):
         self.board = ["*","*","*","*","*","*","*","*","*"]
+    def __str__(self):
+        return f"{self.board[0]} {self.board[1]} {self.board[2]}\n{self.board[3]} {self.board[4]} {self.board[5]}\n{self.board[6]} {self.board[7]} {self.board[8]}"
     def make_move(self, player: str, i: int) -> None:
         if self.board[i] == "*":
             self.board[i] = player
         else: print("That square is occupied! Try again.")
+    def has_won(self, player: str) -> bool:
+        for combo in winningCombinations:
+            if combo[0] == player and combo[1] == player and combo[2] == player:
+                return True
+        return False 
+    def game_over(self,players: list[str]) -> bool:
+        if self.has_won(players[0]):
+            return True
+        if self.has_won(players[1]):
+            return True
+        for square in self.board:
+            if square == "*":
+                return False
+        return True
+    def clear(self):
+        self.board = ["*","*","*","*","*","*","*","*","*","*"]
 
 
 def play_tic_tac_toe() -> None:
@@ -39,7 +57,7 @@ def play_tic_tac_toe() -> None:
     players = ["X", "O"]
     turn = 0
 
-    while not brd.game_over():
+    while not brd.game_over(players):
         print(brd)
         move: str = input(f"Player {players[turn]} what is your move? ")
 
@@ -68,7 +86,7 @@ if __name__ == "__main__":
     brd.make_move("X", 8)
     brd.make_move("O", 7)
 
-    assert brd.game_over() == False
+    assert brd.game_over(["X","O"]) == False
 
     brd.make_move("X", 5)
     brd.make_move("O", 6)
@@ -76,11 +94,11 @@ if __name__ == "__main__":
 
     assert brd.has_won("X") == True
     assert brd.has_won("O") == False
-    assert brd.game_over() == True
+    assert brd.game_over(["X","O"]) == True
 
     brd.clear()
 
-    assert brd.game_over() == False
+    assert brd.game_over(["X","O"]) == False
 
     brd.make_move("O", 3)
     brd.make_move("O", 4)
@@ -88,7 +106,7 @@ if __name__ == "__main__":
 
     assert brd.has_won("X") == False
     assert brd.has_won("O") == True
-    assert brd.game_over() == True
+    assert brd.game_over(["X","O"]) == True
 
     print("All tests passed!")
 
