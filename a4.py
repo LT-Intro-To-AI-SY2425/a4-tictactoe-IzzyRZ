@@ -19,7 +19,7 @@ class TTTBoard:
         else: print("That square is occupied! Try again.")
     def has_won(self, player: str) -> bool:
         for combo in winningCombinations:
-            if combo[0] == player and combo[1] == player and combo[2] == player:
+            if self.board[combo[0]] == player and self.board[combo[1]] == player and self.board[combo[2]] == player:
                 return True
         return False 
     def game_over(self,players: list[str]) -> bool:
@@ -61,13 +61,15 @@ def play_tic_tac_toe() -> None:
         print(brd)
         move: str = input(f"Player {players[turn]} what is your move? ")
 
-        if not is_int(move):
+        if not (is_int(move) and 0 <= int(move) <= 8):
             raise ValueError(
                 f"Given invalid position {move}, position must be integer between 0 and 8 inclusive"
             )
-
-        if brd.make_move(players[turn], int(move)):
-            turn = not turn
+        else:
+            brd.make_move(players[turn],int(move))
+            if turn == 0:
+                turn += 1
+            else: turn -= 1
 
     print(f"\nGame over!\n\n{brd}")
     if brd.has_won(players[0]):
@@ -111,4 +113,4 @@ if __name__ == "__main__":
     print("All tests passed!")
 
     # uncomment to play!
-    # play_tic_tac_toe()
+    play_tic_tac_toe()
