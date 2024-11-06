@@ -62,9 +62,10 @@ def play_tic_tac_toe() -> None:
         move: str = input(f"Player {players[turn]} what is your move? ")
 
         if not (is_int(move) and 0 <= int(move) <= 8):
-            raise ValueError(
-                f"Given invalid position {move}, position must be integer between 0 and 8 inclusive"
-            )
+            print(f"The position {move} is invalid! Please input an integer between 0 and 8 (inclusive)!")
+            # raise ValueError(
+            #     f"Given invalid position {move}, position must be integer between 0 and 8 inclusive"
+            # )
         else:
             brd.make_move(players[turn],int(move))
             if turn == 0:
