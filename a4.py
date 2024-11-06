@@ -114,4 +114,16 @@ if __name__ == "__main__":
     print("All tests passed!")
 
     # uncomment to play!
-    play_tic_tac_toe()
+    play = True
+    while play == True:
+        play_tic_tac_toe()
+        endLoop = False
+        while not endLoop:
+            answer: str = input("Would you like to play again? Please answer 'Yes' or 'No'!")
+            if answer == "No":
+                play = False
+                endLoop = True
+            elif answer == "Yes":
+                endLoop = True
+            else: print("Please respond with 'Yes' or 'No'.")
+        
